@@ -30,6 +30,7 @@ Route::delete('/proyecto/{id}', [ProyectoController::class, 'deleteProyecto']);
 // que se encargará de actualizar un proyecto por su ID
 Route::put('/proyecto/{id}', [ProyectoController::class, 'putProyecto']);
 
-
+// Se crea ruta que apunta al controlador UfController e irá al método getUf
+// que se encargará de obtener la UF actual desde el API de mindicador.cl
 Route::get('/uf',[UfController::class, 'getUf']);
 
