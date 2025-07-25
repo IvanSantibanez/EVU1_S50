@@ -13,7 +13,7 @@ class ProyectoController extends Controller
         [
             'id' => 1,
             'nombre' => 'Proyecto de Desarrollo Web',
-            'fechaInicio' => '2025-01-01',
+            'fechaInicio' => '01-01-2025',
             'estado' => 'En curso',
             'responsable' => 'María García',
             'monto' => 5000
@@ -21,7 +21,7 @@ class ProyectoController extends Controller
         [
             'id' => 2,
             'nombre' => 'Sistema de Gestión de Inventario',
-            'fechaInicio' => '2025-03-15',
+            'fechaInicio' => '15-03-2025',
             'estado' => 'Pendiente',
             'responsable' => 'Juan Pérez',
             'monto' => 12000

@@ -17,3 +17,10 @@ main {
 .navbar-logo {
     max-width: 15rem;
 }
+
+.project-detail-card {
+    padding: 1.5rem;
+    background-color: #343a40;
+    color: white;
+    border-radius: 0.5rem;
+}

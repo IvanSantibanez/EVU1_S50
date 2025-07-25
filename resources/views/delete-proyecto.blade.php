@@ -3,5 +3,7 @@
 @section('title', 'eliminar Proyecto')
 
 @section('content')
-    <h2 class="text-center text-info-emphasis">Proyecto: '{{ $proyecto['nombre'] }}' eliminado con éxito</h2>
+<div class="alert alert-success text-center" role="alert">
+    <h2 class="mb-0">El proyecto '{{ $proyecto['nombre'] }}' ha sido eliminado exitosamente.</h2>
+</div>
 @endsection

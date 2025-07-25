@@ -23,7 +23,7 @@
                     <td>{{ $proyecto['fechaInicio'] }}</td>
                     <td>{{ $proyecto['estado'] }}</td>
                     <td>{{ $proyecto['responsable'] }}</td>
-                    <td>${{ number_format($proyecto['monto']) }}</td>
+                    <td>${{ number_format($proyecto['monto'], 0, '', '.') }}</td>
                 </tr>
             @endforeach
         </tbody>
