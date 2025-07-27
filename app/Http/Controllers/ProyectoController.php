@@ -72,7 +72,7 @@ class ProyectoController extends Controller
         return view('error', compact('id'));
     }
 
-    // Método para actualizar un proyecto por su ID (utilkizando la lista creada como ejemplo)
+    // Método para actualizar un proyecto por su ID (utilizando la lista creada como ejemplo)
     public function putProyecto(Request $request, $id)
     {
 
