@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\UfController;
+use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,7 +15,7 @@ Route::get('/user', function (Request $request) {
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware([JwtMiddleware::class])->group(function () {
     Route::get('/proyectos', [ProyectoController::class, 'getProyectos']);
     Route::get('/proyecto/{id}', [ProyectoController::class, 'getProyecto']);
     Route::post('/proyecto', [ProyectoController::class, 'postProyecto']);
