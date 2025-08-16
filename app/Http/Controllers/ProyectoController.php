@@ -8,66 +8,49 @@ use Illuminate\Http\Request;
 class ProyectoController extends Controller
 
 {
-    // Se define una lista de proyectos como ejemplo
-    private $listaProyectos = [
-        [
-            'id' => 1,
-            'nombre' => 'Proyecto de Desarrollo Web',
-            'fechaInicio' => '01-01-2025',
-            'estado' => 'En curso',
-            'responsable' => 'María García',
-            'monto' => 5000
-        ],
-        [
-            'id' => 2,
-            'nombre' => 'Sistema de Gestión de Inventario',
-            'fechaInicio' => '15-03-2025',
-            'estado' => 'Pendiente',
-            'responsable' => 'Juan Pérez',
-            'monto' => 12000
-        ]
-    ];
-
     // Método para obtener la lista de proyectos desde la lista creada
     // y retornar la vista correspondiente
     public function getProyectos()
     {
-        $proyectos = $this->listaProyectos;
+        $proyectos = Proyecto::all();
         return view('get-proyectos', compact('proyectos'));
     }
 
     // Método que obtiene un proyecto específico por su ID
     public function getProyecto($id)
     {
-        foreach ($this->listaProyectos as $proyecto) {
-            if ($proyecto['id'] == $id) {
-                return view('get-proyecto', compact('proyecto'));
-            }
+
+        $proyecto = Proyecto::find($id);
+        if ($proyecto) {
+            return view('get-proyecto', compact('proyecto'));
+        }else{
+            return view('error', compact('id'));
         }
-        return view('error', compact('id'));
     }
 
     // Método para crear un nuevo proyecto, recibiendo los datos como Request
     public function postProyecto(Request $request)
     {
         $proyecto = new Proyecto();
-        $proyecto->id = $request->input('id');
         $proyecto->nombre = $request->input('nombre');
         $proyecto->fechaInicio = $request->input('fechaInicio');
         $proyecto->estado = $request->input('estado');
         $proyecto->responsable = $request->input('responsable');
         $proyecto->monto = $request->input('monto');
+        $proyecto->created_by = $request->input('created_by');
+        $proyecto->save();
         return view('post-proyecto', compact('proyecto'));
     }
 
     // Método para eliminar un proyecto por su ID (utizando la lista creada como ejemplo)
     public function deleteProyecto($id)
     {
-        foreach ($this->listaProyectos as $index => $proyecto) {
-            if ($proyecto['id'] == $id) {
-                unset($this->listaProyectos[$index]);
-                return view('delete-proyecto', compact('proyecto'));
-            }
+        $proyecto = Proyecto::find($id);
+        if ($proyecto) {
+            $proyecto->delete();
+            return view('delete-proyecto', compact('proyecto'));
+        }else{
+            return view('error', compact('id'));
         }
         return view('error', compact('id'));
     }
@@ -76,10 +59,9 @@ class ProyectoController extends Controller
     public function putProyecto(Request $request, $id)
     {
 
-        foreach ($this->listaProyectos as $proyecto) {
-            if ($proyecto['id'] == $id) {
-
-                if ($request->has('nombre')) {
+        $proyecto = Proyecto::find($id);
+        if ($proyecto){
+             if ($request->has('nombre')) {
                     $proyecto['nombre'] = $request->input('nombre');
                 }
                 if ($request->has('fechaInicio')) {
@@ -94,8 +76,8 @@ class ProyectoController extends Controller
                 if ($request->has('monto')) {
                     $proyecto['monto'] = $request->input('monto');
                 }
+                $proyecto->save();
                 return view('put-proyecto', compact('proyecto'));
-            }
         }
         return view('error', compact('id'));
     }
