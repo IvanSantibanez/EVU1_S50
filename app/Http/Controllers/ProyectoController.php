@@ -23,9 +23,8 @@ class ProyectoController extends Controller
         $proyecto = Proyecto::find($id);
         if ($proyecto) {
             return view('get-proyecto', compact('proyecto'));
-        }else{
-            return view('error', compact('id'));
         }
+        return view('error', compact('id'));
     }
 
     // Método para crear un nuevo proyecto, recibiendo los datos como Request
@@ -49,8 +48,6 @@ class ProyectoController extends Controller
         if ($proyecto) {
             $proyecto->delete();
             return view('delete-proyecto', compact('proyecto'));
-        }else{
-            return view('error', compact('id'));
         }
         return view('error', compact('id'));
     }
@@ -60,24 +57,24 @@ class ProyectoController extends Controller
     {
 
         $proyecto = Proyecto::find($id);
-        if ($proyecto){
-             if ($request->has('nombre')) {
-                    $proyecto['nombre'] = $request->input('nombre');
-                }
-                if ($request->has('fechaInicio')) {
-                    $proyecto['fechaInicio'] = $request->input('fechaInicio');
-                }
-                if ($request->has('estado')) {
-                    $proyecto['estado'] = $request->input('estado');
-                }
-                if ($request->has('responsable')) {
-                    $proyecto['responsable'] = $request->input('responsable');
-                }
-                if ($request->has('monto')) {
-                    $proyecto['monto'] = $request->input('monto');
-                }
-                $proyecto->save();
-                return view('put-proyecto', compact('proyecto'));
+        if ($proyecto) {
+            if ($request->has('nombre')) {
+                $proyecto['nombre'] = $request->input('nombre');
+            }
+            if ($request->has('fechaInicio')) {
+                $proyecto['fechaInicio'] = $request->input('fechaInicio');
+            }
+            if ($request->has('estado')) {
+                $proyecto['estado'] = $request->input('estado');
+            }
+            if ($request->has('responsable')) {
+                $proyecto['responsable'] = $request->input('responsable');
+            }
+            if ($request->has('monto')) {
+                $proyecto['monto'] = $request->input('monto');
+            }
+            $proyecto->save();
+            return view('put-proyecto', compact('proyecto'));
         }
         return view('error', compact('id'));
     }
