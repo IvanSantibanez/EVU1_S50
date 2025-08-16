@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\UfController;
 use Illuminate\Http\Request;
@@ -10,27 +11,14 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-// Se crea ruta que apunta al controlador ProyectoController e irá al método getProyectos
-// que se encargará de listar los proyectos
-Route::get('/proyectos',[ProyectoController::class, 'getProyectos']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
 
-// Se crea ruta que apunta al controlador ProyectoController e irá al método getProyecto
-//que se encargará de obtener un proyecto específico por su ID
-Route::get('/proyecto/{id}', [ProyectoController::class, 'getProyecto']);
-
-// Se crea ruta que apunta al controlador ProyectoController e irá al método postProyecto
-// que se encargará de crear un nuevo proyecto
-Route::post('/proyecto', [ProyectoController::class, 'postProyecto']);
-
-// Se crea ruta que apunta al controlador ProyectoController e irá al método deleteProyecto
-// que se encargará de eliminar un proyecto por su ID
-Route::delete('/proyecto/{id}', [ProyectoController::class, 'deleteProyecto']);
-
-// Se crea ruta que apunta al controlador ProyectoController e irá al método putProyecto
-// que se encargará de actualizar un proyecto por su ID
-Route::put('/proyecto/{id}', [ProyectoController::class, 'putProyecto']);
-
-// Se crea ruta que apunta al controlador UfController e irá al método getUf
-// que se encargará de obtener la UF actual desde el API de mindicador.cl
-Route::get('/uf',[UfController::class, 'getUf']);
-
+Route::middleware('auth:api')->group(function () {
+    Route::get('/proyectos', [ProyectoController::class, 'getProyectos']);
+    Route::get('/proyecto/{id}', [ProyectoController::class, 'getProyecto']);
+    Route::post('/proyecto', [ProyectoController::class, 'postProyecto']);
+    Route::delete('/proyecto/{id}', [ProyectoController::class, 'deleteProyecto']);
+    Route::put('/proyecto/{id}', [ProyectoController::class, 'putProyecto']);
+    Route::get('/uf', [UfController::class, 'getUf']);
+});
