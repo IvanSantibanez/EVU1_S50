@@ -14,8 +14,7 @@ class ProyectoSeeder extends Seeder
     public function run(): void
     {
         Proyecto::create([
-            'nombre' => 'Proyecto 1',
-             'nombre' => 'Proyecto de Desarrollo Web',
+            'nombre' => 'Proyecto de Desarrollo Web',
             'fechaInicio' => '2025-01-01',
             'estado' => 'En curso',
             'responsable' => 'Alejandro García',
