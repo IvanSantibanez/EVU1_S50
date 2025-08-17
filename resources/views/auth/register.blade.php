@@ -56,7 +56,7 @@
                 </form>
 
                 <div class="text-center mt-3">
-                    <p class="mb-0">¿Ya tienes una cuenta? <a href="/login" class="text-decoration-none">Inicia sesión aquí</a></p>
+                    <p class="mb-0">¿Ya tienes una cuenta? <a href="/api/login" class="text-decoration-none">Inicia sesión aquí</a></p>
                 </div>
             </div>
         </div>
@@ -67,30 +67,30 @@
 <script>
 document.getElementById('registerForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    
+
     // Limpiar errores previos
     document.querySelectorAll('.invalid-feedback').forEach(error => error.textContent = '');
     document.querySelectorAll('.form-control').forEach(input => {
         input.classList.remove('is-invalid');
     });
-    
+
     const formData = new FormData(this);
     const password = formData.get('password');
     const passwordConfirmation = formData.get('password_confirmation');
-    
+
     // Validar que las contraseñas coincidan
     if (password !== passwordConfirmation) {
         document.getElementById('password_confirmation').classList.add('is-invalid');
         document.getElementById('passwordConfirmationError').textContent = 'Las contraseñas no coinciden.';
         return;
     }
-    
+
     const data = {
         name: formData.get('name'),
         email: formData.get('email'),
         password: password
     };
-    
+
     try {
         const response = await fetch('/api/register', {
             method: 'POST',
@@ -100,9 +100,9 @@ document.getElementById('registerForm').addEventListener('submit', async functio
             },
             body: JSON.stringify(data)
         });
-        
+
         const result = await response.json();
-        
+
         if (response.ok) {
             // Guardar token en localStorage
             localStorage.setItem('token', result.token);
@@ -111,7 +111,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
             alertDiv.className = 'alert alert-success';
             alertDiv.textContent = 'Registro exitoso. Bienvenido! Redirigiendo...';
             document.querySelector('.card-body').insertBefore(alertDiv, document.getElementById('registerForm'));
-            
+
             // Redireccionar después de 2 segundos
             setTimeout(() => {
                 window.location.href = '/proyectos';
@@ -124,7 +124,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
                 alertDiv.textContent = result.message;
                 document.querySelector('.card-body').insertBefore(alertDiv, document.getElementById('registerForm'));
             }
-            
+
             if (result.errors) {
                 Object.keys(result.errors).forEach(field => {
                     const input = document.getElementById(field);

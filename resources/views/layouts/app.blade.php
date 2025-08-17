@@ -79,10 +79,10 @@
             } else {
                 const html = `\
                     <li class="nav-item d-flex align-items-center injected-auth">\
-                        <a class="nav-link" href="/login">Iniciar Sesión</a>\
+                        <a class="nav-link" href="/api/login">Iniciar Sesión</a>\
                     </li>\
                     <li class="nav-item d-flex align-items-center injected-auth">\
-                        <a class="btn btn-outline-light btn-sm ms-2" href="/register">Registrarse</a>\
+                        <a class="btn btn-outline-light btn-sm ms-2" href="/api/register">Registrarse</a>\
                     </li>`;
                 parent.insertAdjacentHTML('beforeend', html);
             }

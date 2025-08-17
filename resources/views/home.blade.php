@@ -24,7 +24,7 @@
                         <p class="card-text text-muted">
                             Accede a tu cuenta para gestionar tus proyectos y ver información detallada.
                         </p>
-                        <a href="/login" class="btn btn-primary btn-lg">
+                        <a href="/api/login" class="btn btn-primary btn-lg">
                             Iniciar Sesión
                         </a>
                     </div>
@@ -42,7 +42,7 @@
                         <p class="card-text text-muted">
                             Regístrate para comenzar a gestionar tus proyectos en nuestra plataforma.
                         </p>
-                        <a href="/register" class="btn btn-success btn-lg">
+                        <a href="/api/register" class="btn btn-success btn-lg">
                             Registrarse
                         </a>
                     </div>

@@ -43,7 +43,7 @@
                 </form>
 
                 <div class="text-center mt-3">
-                    <p class="mb-0">¿No tienes una cuenta? <a href="/register" class="text-decoration-none">Regístrate aquí</a></p>
+                    <p class="mb-0">¿No tienes una cuenta? <a href="/api/register" class="text-decoration-none">Regístrate aquí</a></p>
                 </div>
             </div>
         </div>
@@ -54,20 +54,20 @@
 <script>
 document.getElementById('loginForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    
+
     // Limpiar errores previos
     document.getElementById('emailError').textContent = '';
     document.getElementById('passwordError').textContent = '';
     document.querySelectorAll('.form-control').forEach(input => {
         input.classList.remove('is-invalid');
     });
-    
+
     const formData = new FormData(this);
     const data = {
         email: formData.get('email'),
         password: formData.get('password')
     };
-    
+
     try {
         const response = await fetch('/api/login', {
             method: 'POST',
@@ -77,9 +77,9 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             },
             body: JSON.stringify(data)
         });
-        
+
         const result = await response.json();
-        
+
             if (response.ok) {
             // Guardar token en localStorage
             localStorage.setItem('token', result.token);
@@ -90,7 +90,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             alertDiv.className = 'alert alert-success';
             alertDiv.textContent = 'Inicio de sesión exitoso. Redirigiendo...';
             document.querySelector('.card-body').insertBefore(alertDiv, document.getElementById('loginForm'));
-            
+
             // Redireccionar después de 2 segundos
             setTimeout(() => {
                 window.location.href = '/proyectos';
@@ -103,7 +103,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
                 alertDiv.textContent = result.error;
                 document.querySelector('.card-body').insertBefore(alertDiv, document.getElementById('loginForm'));
             }
-            
+
             if (result.errors) {
                 Object.keys(result.errors).forEach(field => {
                     const input = document.getElementById(field);
