@@ -13,6 +13,7 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::get('/uf', [UfController::class, 'getUf']);
 
 Route::middleware('auth.jwt')->group(function () {
     Route::get('/proyectos', [ProyectoController::class, 'getProyectos']);
@@ -20,5 +21,4 @@ Route::middleware('auth.jwt')->group(function () {
     Route::post('/proyecto', [ProyectoController::class, 'postProyecto']);
     Route::delete('/proyecto/{id}', [ProyectoController::class, 'deleteProyecto']);
     Route::put('/proyecto/{id}', [ProyectoController::class, 'putProyecto']);
-    Route::get('/uf', [UfController::class, 'getUf']);
 });
