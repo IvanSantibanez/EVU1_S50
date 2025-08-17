@@ -24,7 +24,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/proyectos">Proyectos</a>
+                        <a class="nav-link" href="/api/proyectos">Proyectos</a>
                     </li>
                     <template id="nav-auth-links"></template>
                 </ul>
@@ -61,7 +61,7 @@
                     <li class="nav-item dropdown injected-auth">\
                         <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">Cuenta</a>\
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">\
-                            <li><a class="dropdown-item" href="/proyectos">Mis proyectos</a></li>\
+                            <li><a class="dropdown-item" href="/api/proyectos">Mis proyectos</a></li>\
                             <li><a class="dropdown-item" href="#" id="logoutBtn">Cerrar sesión</a></li>\
                         </ul>\
                     </li>`;

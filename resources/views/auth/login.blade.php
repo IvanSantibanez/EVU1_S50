@@ -93,7 +93,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
             // Redireccionar después de 2 segundos
             setTimeout(() => {
-                window.location.href = '/proyectos';
+                window.location.href = '/api/proyectos';
             }, 2000);
         } else {
             // Mostrar errores

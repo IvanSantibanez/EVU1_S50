@@ -114,7 +114,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
 
             // Redireccionar después de 2 segundos
             setTimeout(() => {
-                window.location.href = '/proyectos';
+                window.location.href = '/api/proyectos';
             }, 2000);
         } else {
             // Mostrar errores
