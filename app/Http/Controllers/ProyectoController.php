@@ -30,15 +30,25 @@ class ProyectoController extends Controller
     // Método para crear un nuevo proyecto, recibiendo los datos como Request
     public function postProyecto(Request $request)
     {
-        $proyecto = new Proyecto();
-        $proyecto->nombre = $request->input('nombre');
-        $proyecto->fechaInicio = $request->input('fechaInicio');
-        $proyecto->estado = $request->input('estado');
-        $proyecto->responsable = $request->input('responsable');
-        $proyecto->monto = $request->input('monto');
-        $proyecto->created_by = $request->input('created_by');
-        $proyecto->save();
-        return view('post-proyecto', compact('proyecto'));
+        $data = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'fechaInicio' => 'required|date',
+            'estado' => 'required|string|max:100',
+            'responsable' => 'required|string|max:255',
+            'monto' => 'required|numeric|min:0|max:999999999',
+        ]);
+        $data['created_by'] = $request->user()->id;
+
+        $proyecto = Proyecto::create($data);
+        return redirect()->route('proyectos.create')->with('success_project', [
+            'message' => 'Proyecto creado exitosamente.',
+            'data' => $proyecto
+        ]);
+    }
+
+    public function getVistaCrearProyecto()
+    {
+        return view('post-proyecto');
     }
 
     // Método para eliminar un proyecto por su ID (utizando la lista creada como ejemplo)
@@ -52,29 +62,30 @@ class ProyectoController extends Controller
         return view('error', compact('id'));
     }
 
+    public function getVistaEditarProyecto($id)
+    {
+        $proyecto = Proyecto::findOrFail($id);
+        return view('put-proyecto', compact('proyecto'));
+    }
+
     // Método para actualizar un proyecto por su ID (utilizando la lista creada como ejemplo)
     public function putProyecto(Request $request, $id)
     {
 
-        $proyecto = Proyecto::find($id);
+        $proyecto = Proyecto::findOrFail($id);
         if ($proyecto) {
-            if ($request->has('nombre')) {
-                $proyecto['nombre'] = $request->input('nombre');
-            }
-            if ($request->has('fechaInicio')) {
-                $proyecto['fechaInicio'] = $request->input('fechaInicio');
-            }
-            if ($request->has('estado')) {
-                $proyecto['estado'] = $request->input('estado');
-            }
-            if ($request->has('responsable')) {
-                $proyecto['responsable'] = $request->input('responsable');
-            }
-            if ($request->has('monto')) {
-                $proyecto['monto'] = $request->input('monto');
-            }
-            $proyecto->save();
-            return view('put-proyecto', compact('proyecto'));
+            $request->validate([
+                'nombre' => 'sometimes|required|string|max:255',
+                'fechaInicio' => 'sometimes|required|date',
+                'estado' => 'sometimes|required|string|max:100',
+                'responsable' => 'sometimes|required|string|max:255',
+                'monto' => 'sometimes|required|numeric|min:0|max:999999999',
+            ]);
+            $proyecto->update($request->all());
+            return redirect()->route('proyectos.edit', $proyecto->id)->with('success_project', [
+                'message' => 'Proyecto actualizado exitosamente.',
+                'data' => $proyecto
+            ]);
         }
         return view('error', compact('id'));
     }

@@ -18,12 +18,12 @@ Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
 
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'loginApi']);
+Route::post('/register', [AuthController::class, 'registerApi']);
 Route::get('/uf', [UfController::class, 'getUf']);
 
 Route::middleware('auth.jwt')->group(function () {
-    Route::get('/proyectos', [ProyectoController::class, 'getProyectos']);
+    Route::get('/proyectos', [ProyectoController::class, 'getProyectos'])->name('proyectos');
     Route::get('/proyecto/{id}', [ProyectoController::class, 'getProyecto']);
     Route::post('/proyecto', [ProyectoController::class, 'postProyecto']);
     Route::delete('/proyecto/{id}', [ProyectoController::class, 'deleteProyecto']);

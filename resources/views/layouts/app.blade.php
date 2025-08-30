@@ -23,18 +23,44 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+                    @auth
                     <li class="nav-item">
-                        <a class="nav-link" href="/proyectos">Proyectos</a>
+                        <a class="nav-link" href="{{ route('proyectos') }}">Proyectos</a>
                     </li>
-                    <template id="nav-auth-links"></template>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('proyectos.create') }}">Crear Proyecto</a>
+                    </li>
+                    @endauth
+                    @guest
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="nav-link" href="{{ route('login') }}">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="btn btn-outline-light btn-sm ms-2" href="{{ route('register') }}">Registrarse</a>
+                    </li>
+                    @endguest
+                    @auth
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Cuenta
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                            <li><a class="dropdown-item" href="{{ route('proyectos') }}">Mis proyectos</a></li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">Cerrar sesión</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    @endauth
                 </ul>
             </div>
         </div>
     </nav>
 
     <x-get-uf />
-
-
     <h1 class="text-center mt-4 text-primary-emphasis">Bienvenido a Tech Solutions</h1>
     <main class="container py-4">@yield('content')</main>
 
@@ -47,17 +73,17 @@
     <script src="{{ asset('assets/js/uf.js') }}"></script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        function updateNavAuth() {
-            const template = document.getElementById('nav-auth-links');
-            const parent = document.querySelector('.navbar-nav');
-            if (!template || !parent) return;
+        document.addEventListener('DOMContentLoaded', function() {
+            function updateNavAuth() {
+                const template = document.getElementById('nav-auth-links');
+                const parent = document.querySelector('.navbar-nav');
+                if (!template || !parent) return;
 
-            parent.querySelectorAll('.injected-auth').forEach(el => el.remove());
+                parent.querySelectorAll('.injected-auth').forEach(el => el.remove());
 
-            const token = localStorage.getItem('token');
-            if (token) {
-                const html = `\
+                const token = localStorage.getItem('token');
+                if (token) {
+                    const html = `\
                     <li class="nav-item dropdown injected-auth">\
                         <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">Cuenta</a>\
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">\
@@ -65,32 +91,32 @@
                             <li><a class="dropdown-item" href="#" id="logoutBtn">Cerrar sesión</a></li>\
                         </ul>\
                     </li>`;
-                parent.insertAdjacentHTML('beforeend', html);
+                    parent.insertAdjacentHTML('beforeend', html);
 
-                const logout = document.getElementById('logoutBtn');
-                if (logout) {
-                    logout.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        localStorage.removeItem('token');
-                        updateNavAuth();
-                        window.location.href = '/';
-                    });
-                }
-            } else {
-                const html = `\
+                    const logout = document.getElementById('logoutBtn');
+                    if (logout) {
+                        logout.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            localStorage.removeItem('token');
+                            updateNavAuth();
+                            window.location.href = '/';
+                        });
+                    }
+                } else {
+                    const html = `\
                     <li class="nav-item d-flex align-items-center injected-auth">\
                         <a class="nav-link" href="/api/login">Iniciar Sesión</a>\
                     </li>\
                     <li class="nav-item d-flex align-items-center injected-auth">\
                         <a class="btn btn-outline-light btn-sm ms-2" href="/api/register">Registrarse</a>\
                     </li>`;
-                parent.insertAdjacentHTML('beforeend', html);
+                    parent.insertAdjacentHTML('beforeend', html);
+                }
             }
-        }
 
-        window.updateNavAuth = updateNavAuth;
-        updateNavAuth();
-    });
+            window.updateNavAuth = updateNavAuth;
+            updateNavAuth();
+        });
     </script>
 
 </body>

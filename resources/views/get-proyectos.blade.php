@@ -13,6 +13,7 @@
                 <th>Estado</th>
                 <th>Responsable</th>
                 <th>Monto</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +25,14 @@
                     <td>{{ $proyecto['estado'] }}</td>
                     <td>{{ $proyecto['responsable'] }}</td>
                     <td>${{ number_format($proyecto['monto'], 0, '', '.') }}</td>
+                    <td>
+                        <a href="{{ route('proyectos.show', $proyecto['id']) }}" class="btn btn-info btn-sm">Ver</a>
+                        <form action="{{ route('proyectos.destroy', $proyecto['id']) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este proyecto?')">Eliminar</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
