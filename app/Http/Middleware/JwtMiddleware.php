@@ -22,21 +22,25 @@ class JwtMiddleware
         try {
             $user = JWTAuth::parseToken()->authenticate();
         } catch (TokenInvalidException $e) {
-            return response()->json([
-                'success' => false,
-                'error' => 'Token inválido'
-            ], 401);
+            return $this->unauthorizedResponse($request, 'Token inválido');
         } catch (TokenExpiredException $e) {
-            return response()->json([
-                'success' => false,
-                'error' => 'Token expirado'
-            ], 401);
+            return $this->unauthorizedResponse($request, 'Token expirado, inicia sesión nuevamente');
         } catch (JWTException $e) {
+            return $this->unauthorizedResponse($request, 'Sin autorización');
+        }
+
+        return $next($request);
+    }
+
+    private function unauthorizedResponse(Request $request, string $message)
+    {
+        if ($request->expectsJson()) {
             return response()->json([
                 'success' => false,
-                'error' => 'Token no proporcionado'
+                'error' => $message
             ], 401);
         }
-        return $next($request);
+
+        return redirect()->route('login')->withErrors(['auth' => $message]);
     }
 }
