@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\ProyectoVistasController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,12 +21,12 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 Route::middleware('auth.jwt')->group(function () {
-    Route::get('/proyectos', [ProyectoController::class, 'getProyectos'])->name('proyectos');
-    Route::get('/proyecto/{id}', [ProyectoController::class, 'getProyecto'])->name('proyectos.show');
-    Route::get('/proyectos/crear', [ProyectoController::class, 'getVistaCrearProyecto'])->name('proyectos.create');
-    Route::post('/proyecto', [ProyectoController::class, 'postProyecto'])->name('proyectos.store');
-    Route::get('/proyecto/{id}/editar', [ProyectoController::class, 'getVistaEditarProyecto'])->name('proyectos.edit');
-    Route::put('/proyecto/{id}/editar', [ProyectoController::class, 'putProyecto'])->name('proyectos.update');
+    Route::get('/proyectos', [ProyectoVistasController::class, 'getProyectos'])->name('proyectos');
+    Route::get('/proyecto/{id}', [ProyectoVistasController::class, 'getProyecto'])->name('proyectos.show');
+    Route::get('/proyectos/crear', [ProyectoVistasController::class, 'getVistaCrearProyecto'])->name('proyectos.create');
+    Route::post('/proyecto', [ProyectoVistasController::class, 'postProyecto'])->name('proyectos.store');
+    Route::get('/proyecto/{id}/editar', [ProyectoVistasController::class, 'getVistaEditarProyecto'])->name('proyectos.edit');
+    Route::put('/proyecto/{id}/editar', [ProyectoVistasController::class, 'putProyecto'])->name('proyectos.update');
 
-    Route::delete('/proyecto/{id}', [ProyectoController::class, 'deleteProyecto'])->name('proyectos.destroy');
+    Route::delete('/proyecto/{id}', [ProyectoVistasController::class, 'deleteProyecto'])->name('proyectos.destroy');
 });

@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Proyecto;
 use Illuminate\Http\Request;
 
-class ProyectoController extends Controller
+
+class ProyectoVistasController extends Controller
 
 {
     // Método para obtener la lista de proyectos desde la lista creada
     // y retornar la vista correspondiente
     public function getProyectos()
     {
-        $proyectos = Proyecto::all();
+        $proyectos = Proyecto::orderBy('fechaInicio', 'desc')->get();
         return view('get-proyectos', compact('proyectos'));
     }
 
